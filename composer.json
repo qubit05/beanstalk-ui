@@ -1,0 +1,30 @@
+{
+    "name": "qubit05/beanstalk-ui",
+    "description": "Simple interface to monitor beanstalk.",
+    "version": "0.0.0",
+    "type": "project",
+    "keywords": ["beanstalk", "interface"],
+    "homepage": "https://github.com/qubit05/beanstalk-ui",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luke Richards",
+            "email": "luke.richards@qubit.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "slim/slim": "2.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "bower install"
+        ],
+        "post-update-cmd": [
+            "bower install"
+        ]
+    }
+}
