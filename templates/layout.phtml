@@ -7,10 +7,22 @@
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
         <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/vendor/angular-grid/ng-grid.min.css">
+
+        <style type="text/css">
+            .gridStyle {
+                border: 1px solid rgb(212,212,212);
+                width: 100%;
+                height: 300px
+            }
+        </style>
     </head>
     <body ng-controller="IndexController">
         <p>Nothing here {{'yet' + '!'}}</p>
 
+        <div class="gridStyle" ng-grid="gridOptions"></div>
+
+        <p>Alternative implementation:</p>
         <table>
             <colgroup>
                 <col>
@@ -22,35 +34,35 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>jobs-urgent</th>
-                    <th>jobs-ready</th>
-                    <th>jobs-reserved</th>
-                    <th>jobs-delayed</th>
-                    <th>jobs-buried</th>
-                    <th>total-jobs</th>
+                    <th>jobs_urgent</th>
+                    <th>jobs_ready</th>
+                    <th>jobs_reserved</th>
+                    <th>jobs_delayed</th>
+                    <th>jobs_buried</th>
+                    <th>total_jobs</th>
                     <th>using</th>
                     <th>watching</th>
                     <th>waiting</th>
-                    <th>cmd-pause-tube</th>
+                    <th>cmd_pause_tube</th>
                     <th>pause</th>
-                    <th>pause-time-left</th>
+                    <th>pause_time_left</th>
                 </tr>
             </thead>
             <tbody>
             <tr ng-repeat="stat in stats">
                 <td>{{stat.name}}</td>
-                <td>{{stat.current-jobs-urgent}}</td>
-                <td>{{stat.current-jobs-ready}}</td>
-                <td>{{stat.current-jobs-reserved}}</td>
-                <td>{{stat.current-jobs-delayed}}</td>
-                <td>{{stat.current-jobs-buried}}</td>
+                <td>{{stat.current_jobs_urgent}}</td>
+                <td>{{stat.current_jobs_ready}}</td>
+                <td>{{stat.current_jobs_reserved}}</td>
+                <td>{{stat.current_jobs_delayed}}</td>
+                <td>{{stat.current_jobs_buried}}</td>
                 <td>{{stat.total_jobs}}</td>
-                <td>{{stat.current-using}}</td>
-                <td>{{stat.current-watching}}</td>
-                <td>{{stat.current-waiting}}</td>
-                <td>{{stat.cmd-pause-tube}}</td>
+                <td>{{stat.current_using}}</td>
+                <td>{{stat.current_watching}}</td>
+                <td>{{stat.current_waiting}}</td>
+                <td>{{stat.cmd_pause_tube}}</td>
                 <td>{{stat.pause}}</td>
-                <td>{{stat.pause-time-left}}</td>
+                <td>{{stat.pause_time_left}}</td>
             </tr>
             </tbody>
         </table>
@@ -58,6 +70,8 @@
         <script src="/vendor/angular/angular.min.js"></script>
         <script src="/vendor/jquery/dist/jquery.min.js"></script>
         <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/vendor/angular-bootstrap/ui-bootstrap.min.js"></script>
+        <script src="/vendor/angular-grid/build/ng-grid.min.js"></script>
         <script src="/scripts/app/controllers.js"></script>
     </body>
 </html>
