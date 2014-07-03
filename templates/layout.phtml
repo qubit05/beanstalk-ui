@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" xmlns:ng="http://angularjs.org" ng-app="buiApp">
+    <head>
+        <title>Beanstalk UI</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+        <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
+    </head>
+    <body ng-controller="IndexController">
+        <p>Nothing here {{'yet' + '!'}}</p>
+
+        <table>
+            <colgroup>
+                <col>
+                <col span="5">
+                <col>
+                <col span="3">
+                <col span="3">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>jobs-urgent</th>
+                    <th>jobs-ready</th>
+                    <th>jobs-reserved</th>
+                    <th>jobs-delayed</th>
+                    <th>jobs-buried</th>
+                    <th>total-jobs</th>
+                    <th>using</th>
+                    <th>watching</th>
+                    <th>waiting</th>
+                    <th>cmd-pause-tube</th>
+                    <th>pause</th>
+                    <th>pause-time-left</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="stat in stats">
+                <td>{{stat.name}}</td>
+                <td>{{stat.current-jobs-urgent}}</td>
+                <td>{{stat.current-jobs-ready}}</td>
+                <td>{{stat.current-jobs-reserved}}</td>
+                <td>{{stat.current-jobs-delayed}}</td>
+                <td>{{stat.current-jobs-buried}}</td>
+                <td>{{stat.total_jobs}}</td>
+                <td>{{stat.current-using}}</td>
+                <td>{{stat.current-watching}}</td>
+                <td>{{stat.current-waiting}}</td>
+                <td>{{stat.cmd-pause-tube}}</td>
+                <td>{{stat.pause}}</td>
+                <td>{{stat.pause-time-left}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <script src="/vendor/angular/angular.min.js"></script>
+        <script src="/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/scripts/app/controllers.js"></script>
+    </body>
+</html>
