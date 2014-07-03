@@ -2,7 +2,21 @@
 require_once dirname(__DIR__) . '/src/bootstrap.php';
 
 $config = require APP_ROOT . '/config.php';
-$app    = new Slim\Slim($config);
+$app    = new \Slim\Slim($config);
+
+// configure mode
+$app->configureMode('development', function() use ($app) {
+    $app->config(array(
+        'log.enabled' => true,
+        'debug'       => true,
+    ));
+});
+$app->configureMode('production', function() use ($app) {
+    $app->config(array(
+        'log.enabled' => true,
+        'debug'       => false,
+    ));
+});
 
 // dependency container
 $app->container->singleton('beanstalk', function () use ($app) {
