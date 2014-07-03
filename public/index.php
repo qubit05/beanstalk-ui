@@ -29,6 +29,14 @@ $app->container->singleton('buiService', function () use ($app) {
 });
 
 // routing
+$app->get('/jobstats', function() use ($app) {
+    $service = $app->container->buiService;
+    /* @var $service \Bui\BuiService */
+    $response = $app->response();
+    $response->header('Content-Type', 'application/json');
+    $response->status(200);
+    $response->setBody(json_encode(make_json_safe_keys($service->getAllStats())));
+});
 $app->get('/', function() use ($app) {
     $service = $app->container->buiService;
     /* @var $service \Bui\BuiService */
