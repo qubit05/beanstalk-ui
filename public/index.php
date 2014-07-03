@@ -6,9 +6,8 @@ $app    = new Slim\Slim($config);
 
 // dependency container
 $app->container->singleton('beanstalk', function () use ($app) {
-//    error_log('singleton'.  var_export(func_get_args(),true));
-    $host = $app->config('server.host');
-    $port = $app->config('server.port');
+    $host = $app->config('beanstalk.host');
+    $port = $app->config('beanstalk.port');
     return new \Pheanstalk\Pheanstalk($host, $port);
 });
 $app->container->singleton('buiService', function () use ($app) {
