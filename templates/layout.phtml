@@ -15,6 +15,10 @@
                 width: 100%;
                 height: 300px
             }
+            #chart {
+                height: 400px;
+                width: 800px;
+            }
         </style>
     </head>
     <body ng-controller="IndexController">
@@ -22,56 +26,15 @@
 
         <div class="gridStyle" ng-grid="gridOptions"></div>
 
-        <p>Alternative implementation:</p>
-        <table width="100%">
-            <colgroup>
-                <col>
-                <col span="5">
-                <col>
-                <col span="3">
-                <col span="3">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>jobs_urgent</th>
-                    <th>jobs_ready</th>
-                    <th>jobs_reserved</th>
-                    <th>jobs_delayed</th>
-                    <th>jobs_buried</th>
-                    <th>total_jobs</th>
-                    <th>using</th>
-                    <th>watching</th>
-                    <th>waiting</th>
-                    <th>cmd_pause_tube</th>
-                    <th>pause</th>
-                    <th>pause_time_left</th>
-                </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="stat in stats">
-                <td>{{stat.name}}</td>
-                <td>{{stat.current_jobs_urgent}}</td>
-                <td>{{stat.current_jobs_ready}}</td>
-                <td>{{stat.current_jobs_reserved}}</td>
-                <td>{{stat.current_jobs_delayed}}</td>
-                <td>{{stat.current_jobs_buried}}</td>
-                <td>{{stat.total_jobs}}</td>
-                <td>{{stat.current_using}}</td>
-                <td>{{stat.current_watching}}</td>
-                <td>{{stat.current_waiting}}</td>
-                <td>{{stat.cmd_pause_tube}}</td>
-                <td>{{stat.pause}}</td>
-                <td>{{stat.pause_time_left}}</td>
-            </tr>
-            </tbody>
-        </table>
+        <div ac-chart="chart.chartType" ac-data="chart.data" ac-config="chart.config" id="chart" class="chart ng-isolate-scope ng-scope"></div>
 
-        <script src="/vendor/angular/angular.min.js"></script>
-        <script src="/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="/vendor/angular-bootstrap/ui-bootstrap.min.js"></script>
-        <script src="/vendor/angular-grid/build/ng-grid.min.js"></script>
-        <script src="/scripts/app/controllers.js"></script>
+        <script src="/vendor/jquery/dist/jquery.min.js" type="text/javascript"></script>
+        <script src="/vendor/angular/angular.min.js" type="text/javascript"></script>
+        <script src="/vendor/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="/vendor/angular-bootstrap/ui-bootstrap.min.js" type="text/javascript"></script>
+        <script src="/vendor/angular-grid/build/ng-grid.min.js" type="text/javascript"></script>
+        <script src="/vendor/d3/d3.min.js" type="text/javascript"></script>
+        <script src="/vendor/angular-charts/dist/angular-charts.min.js" type="text/javascript"></script>
+        <script src="/scripts/app/controllers.js" type="text/javascript"></script>
     </body>
 </html>

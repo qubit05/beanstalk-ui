@@ -1,6 +1,6 @@
 'use strict';
 
-var buiApp = angular.module('buiApp', ['ui.bootstrap', 'ngGrid']);
+var buiApp = angular.module('buiApp', ['ui.bootstrap', 'ngGrid', 'angularCharts']);
 buiApp
 .factory('buiService', function($http) {
     return {
@@ -14,13 +14,6 @@ buiApp
 })
 .controller('IndexController', function($scope, buiService) {
     $scope.stats = [];
-    var refreshData = function() {
-        buiService.getAllStats().then(function(stats) {
-            $scope.stats = stats;
-            setTimeout(refreshData, 1000);
-        });
-    };
-    setTimeout(refreshData, 1000)
 
     $scope.gridOptions = {
         data: 'stats',
@@ -70,4 +63,59 @@ buiApp
             visible: false
         }]
     };
+
+    $scope.chart = {
+        chartType: 'line',
+        config: {
+            labels: false,
+            title : "Watching",
+            legend : {
+                display: true,
+                position:'right'
+            },
+            click : function() {},
+            mouseover : function() {},
+            mouseout : function() {},
+            innerRadius: 0,
+            lineLegend: 'lineEnd'
+        },
+        data: {
+            series: [],
+            data : []
+        }
+    };
+
+    var headersSet = false,
+        lastStats = [],
+        maxLength = 1000,
+        refreshData = function() {
+            buiService.getAllStats().then(function(stats) {
+                $scope.stats = stats;
+                pushToGraph(stats)
+            });
+        },
+        pushToGraph = function(latestStats) {
+            var newEntry = {
+                x: new Date,
+                y: []
+            };
+            for (var index in latestStats) {
+                if (!headersSet) {
+                    // populate series headers
+                    $scope.chart.data.series.push(latestStats[index].name);
+                }
+                newEntry.y.push(latestStats[index].current_watching);
+            }
+            if (!headersSet) {
+                console.log($scope.chart.data.series);
+                console.log(newEntry);
+            }
+            headersSet = true;
+            $scope.chart.data.data.unshift(newEntry);
+            if ($scope.chart.data.data.length > maxLength) {
+                $scope.chart.data.data.pop();
+            }
+        };
+
+    setInterval(refreshData, 1000);
 });
