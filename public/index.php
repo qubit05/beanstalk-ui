@@ -30,8 +30,19 @@ $app->container->singleton('buiService', function () use ($app) {
 
 // routing
 $app->get('/jobstats', function() use ($app) {
-    $service = $app->container->buiService;
-    /* @var $service \Bui\BuiService */
+    $retries = 3;
+    while ($retries > 0) {
+        try {
+            $service = $app->container->buiService;
+            /* @var $service \Bui\BuiService */
+        } catch (\Pheanstalk\Exception\ConnectionException $e) {
+            if ($retries == 0) {
+                throw $e;
+            }
+        }
+        $retries--;
+    }
+
     $response = $app->response();
     $response->header('Content-Type', 'application/json');
     $response->status(200);
