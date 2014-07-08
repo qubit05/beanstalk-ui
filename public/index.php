@@ -49,8 +49,6 @@ $app->get('/jobstats', function() use ($app) {
     $response->setBody(json_encode(make_json_safe_keys($service->getAllStats())));
 });
 $app->get('/', function() use ($app) {
-    $service = $app->container->buiService;
-    /* @var $service \Bui\BuiService */
-    $app->render('layout.phtml', array('stats' => $service->getAllStats()));
+    $app->render('layout.phtml');
 });
 $app->run();
