@@ -1,8 +1,61 @@
 'use strict';
 
-var buiApp = angular.module('buiApp', ['ui.bootstrap', 'ngGrid', 'angularCharts']);
-buiApp
-.factory('buiService', function($http) {
+var buiApp = angular.module('buiApp', ['ui.bootstrap', 'ngGrid']);
+
+buiApp.directive('chart', function() {
+    return {
+        restrict: 'E',
+        link: function(scope, elem, attrs) {
+
+            var chart;
+
+            scope.$watch(attrs.ngModel, function(v) {
+
+                var data = [
+                    {
+                        data: v,
+                        color: '#62aeef',
+                        lines: {
+                            lineWidth: 2,
+                            fill: true,
+                            fillColor: '#f3faff'
+                        }
+                    }
+                ];
+
+                if (!chart) {
+                    var opts = {
+                        grid: {
+                            aboveData: true,
+                            color: '#3f3f3f',
+                            backgroundColor: '#fff',
+                            borderWidth: 1,
+                            borderColor: '#D4D4D4'
+                        },
+                        series: {
+                            shadowSize: 0 // Drawing is faster without shadows
+                        },
+                        xaxis: {
+                            show: false
+                        },
+                        yaxis: {
+                            tickDecimals: 0,
+                            min: 0
+                        }
+                    };
+
+                    chart = $.plot(elem, data, opts);
+                } else {
+                    chart.setData(data);
+                    chart.setupGrid();  // only need because the grid and axis is changing
+                    chart.draw();
+                }
+            }, true); // deep watch to see changes inside the object
+        }
+    };
+});
+
+buiApp.factory('buiService', function($http) {
     return {
         getAllStats: function() {
             return $http.get('/jobstats')
@@ -11,8 +64,9 @@ buiApp
                 });
         }
     }
-})
-.controller('IndexController', function($scope, buiService) {
+});
+
+buiApp.controller('IndexController', function($scope, buiService) {
     $scope.stats = [];
 
     $scope.gridOptions = {
@@ -64,58 +118,32 @@ buiApp
         }]
     };
 
-    $scope.chart = {
-        chartType: 'line',
-        config: {
-            labels: false,
-            title : "Watching",
-            legend : {
-                display: true,
-                position:'right'
-            },
-            click : function() {},
-            mouseover : function() {},
-            mouseout : function() {},
-            innerRadius: 0,
-            lineLegend: 'lineEnd'
-        },
-        data: {
-            series: [],
-            data : []
-        }
-    };
+    $scope.chartTotalJobs = [];
 
-    var headersSet = false,
-        lastStats = [],
-        maxLength = 1000,
+    var lastTotalJobs = 0,
+        maxLength = 60,
         refreshData = function() {
             buiService.getAllStats().then(function(stats) {
                 $scope.stats = stats;
-                pushToGraph(stats)
-            });
-        },
-        pushToGraph = function(latestStats) {
-            var newEntry = {
-                x: new Date,
-                y: []
-            };
-            for (var index in latestStats) {
-                if (!headersSet) {
-                    // populate series headers
-                    $scope.chart.data.series.push(latestStats[index].name);
+
+                var totalJobs = 0,
+                    diff = 0;
+
+                stats.forEach(function(tubeStats) {
+                    totalJobs += parseInt(tubeStats.total_jobs, 10);
+                });
+
+                if (lastTotalJobs > 0) {
+                    diff = totalJobs - lastTotalJobs;
+                    $scope.chartTotalJobs.push([new Date, diff]);
                 }
-                newEntry.y.push(latestStats[index].current_watching);
-            }
-            if (!headersSet) {
-                console.log($scope.chart.data.series);
-                console.log(newEntry);
-            }
-            headersSet = true;
-            $scope.chart.data.data.unshift(newEntry);
-            if ($scope.chart.data.data.length > maxLength) {
-                $scope.chart.data.data.pop();
-            }
+                if ($scope.chartTotalJobs.length > maxLength) {
+                    $scope.chartTotalJobs.shift();
+                }
+                lastTotalJobs = totalJobs;
+            });
         };
 
+    refreshData();
     setInterval(refreshData, 1000);
 });
