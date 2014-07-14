@@ -48,6 +48,25 @@ $app->get('/summary', function() use ($app) {
     $response->status(200);
     $response->setBody(json_encode(make_json_safe_keys($service->getAllStats())));
 });
+$app->get('/tube-stats/:name', function($name) use ($app) {
+    $retries = 3;
+    while ($retries > 0) {
+        try {
+            $service = $app->container->buiService;
+            /* @var $service \Bui\BuiService */
+        } catch (\Pheanstalk\Exception\ConnectionException $e) {
+            if ($retries == 0) {
+                throw $e;
+            }
+        }
+        $retries--;
+    }
+
+    $response = $app->response();
+    $response->header('Content-Type', 'application/json');
+    $response->status(200);
+    $response->setBody(json_encode(make_json_safe_keys($service->getTubeStats($name))));
+});
 $app->get('/', function() use ($app) {
     $app->render('layout.phtml');
 });

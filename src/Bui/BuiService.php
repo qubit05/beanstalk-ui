@@ -35,4 +35,14 @@ class BuiService
         }
         return $allStats;
     }
+
+    /**
+     *
+     * @param string $tubeName
+     * @return array
+     */
+    public function getTubeStats($tubeName)
+    {
+        return (array)$this->server->statsTube($tubeName);
+    }
 }
