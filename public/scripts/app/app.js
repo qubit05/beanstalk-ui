@@ -161,7 +161,10 @@ buiApp.controller('SummaryController', function($scope, buiService) {
         };
 
     refreshData();
-    setInterval(refreshData, 1000);
+    var intervalId = setInterval(refreshData, 1000);
+    $scope.$on("$destroy", function(){
+        clearInterval(intervalId);
+    });
 });
 
 buiApp.controller('TubeStatsController', function($scope, $routeParams) {
