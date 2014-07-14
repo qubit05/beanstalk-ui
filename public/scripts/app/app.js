@@ -1,6 +1,6 @@
 'use strict';
 
-var buiApp = angular.module('buiApp', ['ui.bootstrap', 'ngGrid']);
+var buiApp = angular.module('buiApp', ['ui.bootstrap', 'ngGrid', 'ngRoute']);
 
 buiApp.directive('chart', function() {
     return {
@@ -66,7 +66,22 @@ buiApp.factory('buiService', function($http) {
     }
 });
 
-buiApp.controller('IndexController', function($scope, buiService) {
+buiApp.config(['$routeProvider', function($routeProvider) {
+    $routeProvider
+        .when('/tube-stats/:tubeName', {
+            templateUrl: 'scripts/app/partials/tube-stats.html',
+            controller: 'TubeStatsController'
+        })
+        .when('/summary', {
+            templateUrl: 'scripts/app/partials/summary.html',
+            controller: 'SummaryController'
+        })
+        .otherwise({
+            redirectTo: '/summary'
+        });
+}]);
+
+buiApp.controller('SummaryController', function($scope, buiService) {
     $scope.stats = [];
 
     $scope.gridOptions = {
@@ -146,4 +161,9 @@ buiApp.controller('IndexController', function($scope, buiService) {
 
     refreshData();
     setInterval(refreshData, 1000);
+});
+
+buiApp.controller('TubeStatsController', function($scope, $routeParams) {
+    // nowt to do just yet
+    $scope.statshere = $routeParams.tubeName;
 });
