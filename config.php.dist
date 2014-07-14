@@ -1,0 +1,11 @@
+<?php
+return array(
+    'login.username' => 'admin',
+    'login.password' => 'password',
+    'beanstalk.host' => 'localhost',
+    'beanstalk.port' => 11300,
+
+    // slim specific
+    'mode'           => 'development', // production, development
+    'templates.path' => APP_ROOT . '/templates'
+);
