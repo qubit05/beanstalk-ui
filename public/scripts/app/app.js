@@ -62,6 +62,12 @@ buiApp.factory('buiService', function($http) {
                 .then(function(result) {
                     return result.data
                 });
+        },
+        getTubeStats: function(tubeName) {
+            return $http.get('/tube-stats/' + tubeName)
+                .then(function(result) {
+                    return result.data;
+                });
         }
     }
 });
@@ -167,7 +173,12 @@ buiApp.controller('SummaryController', function($scope, buiService) {
     });
 });
 
-buiApp.controller('TubeStatsController', function($scope, $routeParams) {
-    // nowt to do just yet
-    $scope.statshere = $routeParams.tubeName;
+buiApp.controller('TubeStatsController', function($scope, $routeParams, buiService) {
+    $scope.tubeName = $routeParams.tubeName;
+    $scope.stats = [];
+
+    buiService.getTubeStats($routeParams.tubeName).then(function(stats) {
+        $scope.stats = stats;
+        console.log(stats);
+    });
 });
