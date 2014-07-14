@@ -58,7 +58,7 @@ buiApp.directive('chart', function() {
 buiApp.factory('buiService', function($http) {
     return {
         getAllStats: function() {
-            return $http.get('/jobstats')
+            return $http.get('/summary')
                 .then(function(result) {
                     return result.data
                 });

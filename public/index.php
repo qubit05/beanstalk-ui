@@ -29,7 +29,7 @@ $app->container->singleton('buiService', function () use ($app) {
 });
 
 // routing
-$app->get('/jobstats', function() use ($app) {
+$app->get('/summary', function() use ($app) {
     $retries = 3;
     while ($retries > 0) {
         try {
