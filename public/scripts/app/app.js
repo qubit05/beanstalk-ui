@@ -90,7 +90,8 @@ buiApp.controller('SummaryController', function($scope, buiService) {
         columnDefs: [{
             field: 'name',
             displayName: 'Name',
-            pinnable: true
+            pinnable: true,
+            cellTemplate: '<a href="#/tube-stats/{{row.getProperty(col.field)}}">{{row.getProperty(col.field)}}</a>'
         },{
             field: 'total_jobs',
             displayName: 'Total'
