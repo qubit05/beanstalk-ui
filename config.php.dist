@@ -5,6 +5,11 @@ return array(
     'beanstalk.host' => 'localhost',
     'beanstalk.port' => 11300,
 
+    'versions.base_url' => 'https://api.github.com/',
+
+    // storage
+    'storage.cache.http' => APP_ROOT . '/storage/http',
+
     // slim specific
     'mode'           => 'development', // production, development
     'templates.path' => APP_ROOT . '/templates'
