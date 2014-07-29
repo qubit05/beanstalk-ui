@@ -58,13 +58,13 @@ buiApp.directive('chart', function() {
 buiApp.factory('buiService', function($http) {
     return {
         getAllStats: function() {
-            return $http.get('/summary')
+            return $http.get('/tube')
                 .then(function(result) {
                     return result.data
                 });
         },
         getTubeStats: function(tubeName) {
-            return $http.get('/tube-stats/' + tubeName)
+            return $http.get('/tube/' + tubeName)
                 .then(function(result) {
                     return result.data;
                 });
