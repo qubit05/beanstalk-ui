@@ -120,7 +120,7 @@ $app->delete('/job/:id', function() use ($app) {
     // delete a job
 })->conditions(array('id' => '\d+'));
 $app->get('/', function() use ($app) {
-    $app->render('layout.phtml');
+    $app->render('index.phtml');
 });
 
 // finally run!
